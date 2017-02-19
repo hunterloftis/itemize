@@ -4,7 +4,7 @@
 $ yarn add itemize
 ```
 
-A lazy, fluent crawler/scraper/mirror/site mapper with an async/await API.
+A lazy, fluent web crawler with an async/await API.
 Itemize lists all of the URLs underneath a certain root URL.
 
 ```js

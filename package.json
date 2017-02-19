@@ -1,6 +1,7 @@
 {
   "name": "itemize",
   "version": "1.0.0",
+  "description": "A lazy, fluent web crawler with an async/await API.",
   "engines": {
     "node": ">=7.4.0"
   },
