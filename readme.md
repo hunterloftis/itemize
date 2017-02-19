@@ -64,6 +64,17 @@ Returns a Promise for an Array of Strings, all of the previously traversed items
 const all = await items.all()
 ```
 
+### .close()
+
+Itemize uses a keepalive HTTP/HTTPS agent.
+Use `close()` to destroy the existing underlying socket and create a new Agent with no existing connections.
+
+You should use this to clean up after Itemize instances that haven't completed their crawls.
+
+```js
+items.close()
+```
+
 ## Tests and Examples
 
 ```
