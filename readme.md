@@ -46,7 +46,7 @@ const releases = itemize('https://nodejs.org/download/release/', { depth: 1 })
 
 Returns a Promise for a String, the next linked URL.
 
-*If no urls remain, returns a Promise for `undefined`.*
+If no urls remain, returns a Promise for `undefined`.
 
 ```js
 const url = await items.next()
