@@ -11,15 +11,11 @@ $ yarn add itemize
 Itemize lists all of the linked files and pages underneath the specified root URL.
 
 ```js
-const itemize = require('itemize')
+const urls = itemize('https://news.ycombinator.com', { depth: 2 })
 
-list()  // Get a quick Hacker News sitemap
-
-async function list() {
-  const urls = itemize('https://news.ycombinator.com', { depth: 2 })
-  while (!urls.done()) {
-    console.log(await urls.next())
-  }
+// Get a quick Hacker News sitemap
+while (!urls.done()) {
+  console.log(await urls.next())
 }
 ```
 
