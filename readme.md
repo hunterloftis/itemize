@@ -2,13 +2,13 @@
 
 A lazy, fluent web crawler with an async/await API.
 
-Itemize lists all of the linked files and pages underneath the specified root URL.
-
 ```
 $ yarn add itemize
 ```
 
 ## Quickstart
+
+Itemize lists all of the linked files and pages underneath the specified root URL.
 
 ```js
 const itemize = require('itemize')
