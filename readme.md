@@ -1,11 +1,13 @@
 # Itemize
 
+A lazy, fluent web crawler with an async/await API.
+Itemize lists all of the URLs underneath a certain root URL.
+
 ```
 $ yarn add itemize
 ```
 
-A lazy, fluent web crawler with an async/await API.
-Itemize lists all of the URLs underneath a certain root URL.
+## Quickstart
 
 ```js
 const itemize = require('itemize')
