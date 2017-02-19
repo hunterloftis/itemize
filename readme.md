@@ -1,6 +1,7 @@
 # Itemize
 
 A lazy, fluent web crawler with an async/await API.
+
 Itemize lists all of the linked files and pages underneath the specified root URL.
 
 ```
