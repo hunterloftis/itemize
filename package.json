@@ -13,14 +13,10 @@
   "devDependencies": {
     "express": "^4.14.1",
     "jest": "^18.1.0",
-    "portfinder": "^1.0.13",
-    "standard": "^8.6.0",
-    "supertest": "^3.0.0"
+    "standard": "^8.6.0"
   },
   "dependencies": {
-    "axios": "^0.15.3",
     "cheerio": "^0.22.0",
-    "request-promise-lite": "^0.8.1",
     "requisition": "^1.7.0"
   }
 }
