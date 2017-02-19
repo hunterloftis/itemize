@@ -1,0 +1,26 @@
+{
+  "name": "itemize",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=7.4.0"
+  },
+  "scripts": {
+    "lint": "standard --fix itemize.js",
+    "test": "yarn run lint && node --harmony node_modules/.bin/jest"
+  },
+  "main": "itemize.js",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "^4.14.1",
+    "jest": "^18.1.0",
+    "portfinder": "^1.0.13",
+    "standard": "^8.6.0",
+    "supertest": "^3.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.15.3",
+    "cheerio": "^0.22.0",
+    "request-promise-lite": "^0.8.1",
+    "requisition": "^1.7.0"
+  }
+}
