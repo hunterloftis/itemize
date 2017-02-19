@@ -35,7 +35,7 @@ Returns an Itemize instance.
   - depth: Number, crawl this many layers deep (0)
 
 ```js
-const releases = itemize('https://nodejs.org/download/release/', { depth: 1 })
+const items = itemize('https://nodejs.org/download/release/', { depth: 1 })
 ```
 
 ### .next()
