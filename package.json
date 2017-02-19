@@ -7,7 +7,7 @@
   },
   "scripts": {
     "lint": "standard --fix itemize.js",
-    "test": "yarn run lint && node --harmony node_modules/.bin/jest"
+    "test": "node --harmony node_modules/.bin/jest"
   },
   "repository": "https://github.com/hunterloftis/itemize",
   "main": "itemize.js",

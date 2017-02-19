@@ -2,6 +2,7 @@ const itemize = require('..')
 const express = require('express')
 
 let server, items
+let lastHeaders
 
 beforeAll((done) => {
   const app = createApp()
@@ -9,25 +10,42 @@ beforeAll((done) => {
   server = app.listen(5000, done)
 })
 
-test('the first item is the root URL', async () => {
+test('first returns the root URL', async () => {
   const item = await items.next()
   expect(item).toBe('http://localhost:5000/base/')
 })
 
-test('finds 5 items total', async () => {
-  let i = 0
-  while (await items.next()) i++
-  expect(i).toBe(4)
-  expect(items.all().length).toBe(5)
+test('uses a keep-alive connection', async () => {
+  const item = await items.next()
+  expect(lastHeaders['connection']).toBe('keep-alive')
 })
 
-test('does not find the deep url', () => {
-  const hasDeep = items.all().join('').includes('/deep')
+test('finds 5 items total', async () => {
+  while (!items.done()) await items.next()
+  expect((await items.all()).length).toBe(5)
+})
+
+test('does not find the deep url', async () => {
+  const hasDeep = (await items.all()).join('').includes('/deep')
   expect(hasDeep).toBe(false)
 })
 
-test('does not move up to the root url', () => {
-  expect(items.all()).not.toContain('http://localhost:5000/')
+test('does not move up to the parent route', async () => {
+  expect(await items.all()).not.toContain('http://localhost:5000/')
+})
+
+test('returns undefined when all items have been returned', async () => {
+  let i = 10
+  while(i--) {
+    let item = await items.next()
+    expect(item).toBeUndefined()
+  }
+})
+
+test('can be closed before completion', async () => {
+  const unfinished = itemize('http://localhost:5000/base/', { depth: 2 })
+  await unfinished.next()
+  unfinished.close()
 })
 
 afterAll((done) => {
@@ -36,6 +54,10 @@ afterAll((done) => {
 
 function createApp () {
   return express()
+    .use((req, res, next) => {
+      lastHeaders = Object.assign({}, req.headers)
+      next()
+    })
     .get('/', (req, res) => res.send('root'))
     .get('/base/', (req, res) => {
       res.send("<html><body><a href='..'>..</a><a href='a/'>a</a><a href='b/'>b</b></body></html>")

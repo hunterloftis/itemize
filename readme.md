@@ -58,10 +58,10 @@ if (items.done()) console.log('crawl complete')
 
 ### .all()
 
-Returns an Array of Strings, all of the previously traversed items.
+Returns a Promise for an Array of Strings, all of the previously traversed items.
 
 ```js
-console.log('all items:', items.all())
+const all = await items.all()
 ```
 
 ## Tests and Examples
