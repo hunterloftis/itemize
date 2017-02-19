@@ -32,7 +32,7 @@ with `next()`.
 
 ### itemize(url, options)
 
-Returns an Itemize instance
+Returns an Itemize instance.
 
 - url: String, the root URL from which to crawl
 - options: Object
@@ -44,7 +44,9 @@ const releases = itemize('https://nodejs.org/download/release/', { depth: 1 })
 
 ### .next()
 
-Returns a Promise for a String, the next linked URL
+Returns a Promise for a String, the next linked URL.
+
+*If no urls remain, returns a Promise for `undefined`.*
 
 ```js
 const url = await items.next()
@@ -52,7 +54,7 @@ const url = await items.next()
 
 ### .done()
 
-Returns a Boolean representing whether or not all spidering routes have been exhausted
+Returns a Boolean representing whether or not all spidering routes have been exhausted.
 
 ```js
 if (items.done()) console.log('crawl complete')
@@ -60,7 +62,7 @@ if (items.done()) console.log('crawl complete')
 
 ### .all()
 
-Returns an Array of Strings, all of the previously traversed items
+Returns an Array of Strings, all of the previously traversed items.
 
 ```js
 console.log('all items:', items.all())
