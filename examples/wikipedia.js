@@ -2,9 +2,9 @@ const itemize = require('..')
 
 list()
 
-// Get a quick Hacker News sitemap
+// See what's poppin on wikipedia
 async function list() {
-  const urls = itemize('https://news.ycombinator.com', { depth: 2 })
+  const urls = itemize('https://en.wikipedia.org/wiki', { depth: 3 })
   while (!urls.done()) {
     console.log(await urls.next())
   }

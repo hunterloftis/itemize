@@ -9,7 +9,9 @@ const httpsAgent = require('https').Agent
 module.exports = itemize
 
 function itemize (root, opts) {
-  const options = Object.assign({ depth: 0 }, opts)
+  const options = Object.assign({ depth: 0, query: false, hash: false }, opts)
+  const query = options.query ? undefined : { query: '', search: '' }
+  const hash = options.hash ? undefined : { hash: '' }
   const queue = [root]
   const visited = []
   let agent = agency(root)
@@ -63,24 +65,24 @@ function itemize (root, opts) {
       }
     }
   }
+
+  function simplify (uri) {
+    const stripped = Object.assign(url.parse(uri), query, hash)
+    return url.format(stripped)
+  }
+
+  function parse (uri, body) {
+    const $ = cheerio.load(body)
+    const links = $('a').map((i, el) => $(el).attr('href')).get()
+    const children = links.map(link => resolve(uri, link))
+                          .map(simplify)
+                          .filter(link => link.startsWith(uri))
+    return children
+  }
 }
 
 function agency (uri) {
   const proto = url.parse(uri).protocol
   const Agent = proto === 'https:' ? httpsAgent : httpAgent
   return new Agent({ keepAlive: true })
-}
-
-function parse (uri, body) {
-  const $ = cheerio.load(body)
-  const links = $('a').map((i, el) => $(el).attr('href')).get()
-  const children = links.map(link => resolve(uri, link))
-                        .map(simplify)
-                        .filter(link => link.startsWith(uri))
-  return children
-}
-
-function simplify (uri) {
-  const stripped = Object.assign(url.parse(uri), { search: '', query: '', hash: '' })
-  return url.format(stripped)
 }

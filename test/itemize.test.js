@@ -48,7 +48,33 @@ test('can be closed before completion', async () => {
   unfinished.close()
 })
 
+test('ignores querystrings and hashes by default', async () => {
+  const i = itemize('http://localhost:5000/options', { depth: 2 })
+  while (!i.done()) await i.next()
+  const all = await i.all()
+  expect(all.length).toBe(1)
+  expect(all[0]).toBe('http://localhost:5000/options')
+  i.close()
+})
+
+test('will follow querystrings with query: true', async () => {
+  const i = itemize('http://localhost:5000/options', { depth: 2, query: true })
+  while (!i.done()) await i.next()
+  const all = await i.all()
+  expect(all.length).toBe(2)
+  expect(all[1]).toBe('http://localhost:5000/options?foo=bar')
+})
+
+test('will follow hashes with hash: true', async () => {
+  const i = itemize('http://localhost:5000/options', { depth: 2, hash: true })
+  while (!i.done()) await i.next()
+  const all = await i.all()
+  expect(all.length).toBe(2)
+  expect(all[1]).toBe('http://localhost:5000/options#foobar')
+})
+
 afterAll((done) => {
+  items.close()
   server.close(done)
 })
 
@@ -72,4 +98,7 @@ function createApp () {
       res.send("<html><body><a href='notfound'>404</a><a href='/'>root</a><a href='foo/bar/baz/deep'>deep</a></body></html>")
     })
     .get('/base/b/foo/bar/baz/deep', (req, res) => res.send('deep'))
+    .get('/options', (req, res) => {
+      res.send("<html><body><a href='/options?foo=bar'>query</a><a href='/options#foobar'>hash</a></body></html>")
+    })
 }
